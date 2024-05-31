@@ -53,31 +53,28 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.transparent,
           title: Text(widget.title),
         ),
-        body: SingleChildScrollView(
-          child: StreamBuilder<List<Task>>(
-            stream: fetchHomework(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
-              if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return snapshot.data.mapNullable(
-                      (final List<Task> tasks) => Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TasksList(tasks: tasks),
-                        ],
-                      ),
-                    ) ??
-                    (throw Exception("No data"));
-              }
-            },
-          ),
+        body: StreamBuilder<List<Task>>(
+          stream: fetchHomework(),
+          builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
+            if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return snapshot.data.mapNullable(
+                    (final List<Task> tasks) => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TasksList(tasks: tasks),
+                      ],
+                    ),
+                  ) ??
+                  (throw Exception("No data"));
+            }
+          },
         ),
       ),
     );

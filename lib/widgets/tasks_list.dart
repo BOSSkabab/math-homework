@@ -7,12 +7,15 @@ class TasksList extends StatelessWidget {
   final List<Task?> tasks;
 
   @override
-  Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ...tasks.map(
-            (e) => TaskTile(task: e!),
-          ),
-        ],
+  Widget build(BuildContext context) => ListView.builder(
+        itemCount: tasks.length,
+        itemBuilder: (BuildContext context, int index) => Column(
+          children: [
+            const SizedBox(height: 10),
+            TaskTile(task: tasks[index]!),
+            const SizedBox(height: 10),
+            Container(height: 1, color: Colors.black)
+          ],
+        ),
       );
 }
