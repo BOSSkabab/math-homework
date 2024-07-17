@@ -5,12 +5,12 @@ import 'package:math_homework/task.dart';
 Stream<List<Task>> fetchHomework() => getClient()
     .subscribe(
       SubscriptionOptions<List<Task>>(
-        document: gql(fetchHomeworkSubscription),
-        parserFn: (tasks) =>
-            (tasks["data"]["homework"] as List<Map<String, dynamic>>)
-                .map((task) => Task.fromJson(task))
-                .toList(),
-      ),
+          document: gql(fetchHomeworkSubscription),
+          parserFn: (final Map<String, dynamic> data) {
+            List<dynamic> tasks = data["homework"] as List<dynamic>;
+            // print(data["homework"][0]["pages"]);
+            return tasks.map<Task>((task) => Task.parse(task)).toList();
+          }),
     )
     .map(
       (task) => task.mapQueryResult(),
