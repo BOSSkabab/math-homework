@@ -2,19 +2,17 @@ import "package:flutter/material.dart";
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 GraphQLClient getClient() {
-  final HttpLink httpLink = HttpLink(
-    "https://math-homework.hasura.app/v1/graphql",
-  );
   final WebSocketLink webSocketLink = WebSocketLink(
     "wss://math-homework.hasura.app/v1/graphql",
-    config: const SocketClientConfig(),
+    config: const SocketClientConfig(initialPayload: {
+      "headers": {
+        "x-hasura-admin-secret":
+            "W7wBDD3qIkyGFg37Ghxq9RMomixaRcELO9kC5NOprHmRzxKrRLrEsJXQyRnrIzMF"
+      }
+    }),
   );
   return GraphQLClient(
-    link: Link.split(
-      (final Request request) => request.isSubscription,
-      webSocketLink,
-      httpLink,
-    ),
+    link: webSocketLink,
     cache: GraphQLCache(),
   );
 }
