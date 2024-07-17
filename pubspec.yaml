@@ -1,23 +1,29 @@
-name: math_homework
-description: "A new Flutter project."
-publish_to: 'none' 
-version: 1.0.0+1
-environment:
-  sdk: '>=3.4.0 <4.0.0'
 dependencies:
+  build_runner: ^2.1.11
+  cupertino_icons: ^1.0.6
+  dartpy: ^0.0.3
+  ferry: 0.14.2+1
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
-  build_runner: ^2.1.11
-  ferry: 0.14.2+1
-  get_it: ^7.7.0
   flutter_slidable: ^3.1.0
+  get_it: ^7.7.0
   graphql_flutter: ^5.1.0
-
+  shared_preferences: ^2.2.3
+  zoom_widget: ^2.0.1
+description: A new Flutter project.
 dev_dependencies:
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
   json_serializable: ^6.8.0
+environment:
+  sdk: '>=3.4.0 <4.0.0'
 flutter:
+  assets:
+    - assets/705טריגונומטריה.png 
+    - assets/700טריגונומטריה.png 
+    - assets/698טריגונומטריה.png
   uses-material-design: true
+name: math_homework
+publish_to: none
+version: 1.0.0+1
