@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:math_homework/main.dart';
 import 'package:math_homework/pages_screen.dart';
 import '../task.dart';
 
