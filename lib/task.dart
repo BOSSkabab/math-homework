@@ -5,23 +5,27 @@ class Task {
     required this.title,
     required this.date,
   });
-  final String title;
+  final List<String> title;
   final DateTime date;
   final TaskType type;
-  final String pages;
+  final List<String> pages;
 
-  Task.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
-        date = DateTime(json['date']).add(const Duration(days: 7)),
-        type = TaskType.values
-            .firstWhere((element) => element.text == json['type']),
-        pages = json['pages'];
+  static Task parse(task) => Task(
+        pages: parsePages(task["pages"] as List<Object?>),
+        type: TaskType.values
+            .firstWhere((element) => element.text == task['type'] as String),
+        title: (task["title"] as String)
+            .split("-")
+            .map((title) => "-${title.replaceAll(":", "")}")
+            .toList(),
+        date: parseDate(task['date'] as String),
+      );
 }
 
 enum TaskType {
   geometry("גיאומטריה"),
   trigonometry("טריגונומטריה"),
-  calculus('חדו"א'),
+  calculus('חדו״א'),
   miscellaneous("אחר");
 
   final String text;
@@ -30,3 +34,13 @@ enum TaskType {
     this.text,
   );
 }
+
+DateTime parseDate(String date) => DateTime.parse(
+        "${(date).split('/')[2].replaceAll(" ", "")}-${(date).split('/')[1]}-${(date).split('/')[0]} 00:00:00")
+    .add(const Duration(days: 7));
+
+List<String> parsePages(List<Object?> pages) => pages
+    .map((page) => page.toString().contains(":")
+        ? "${page.toString().replaceAll(";", "").replaceAll(",", "").replaceAll(".", "").split(":")[1]} :${page.toString().replaceAll(";", "").replaceAll(",", "").replaceAll(".", "").split(":")[0].replaceAll(" ", "")}"
+        : "")
+    .toList();
